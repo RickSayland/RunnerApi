@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunnerApi.Domain", "RunnerA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunnerApi.Tests", "RunnerApi.Tests\RunnerApi.Tests.csproj", "{DD951B38-AC77-4987-A662-EC1B0FD975FC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunnerApi.ApiClient", "RunnerApi.ApiClient\RunnerApi.ApiClient.csproj", "{EC736F16-51A1-46B4-923E-EC97C6006CCB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{DD951B38-AC77-4987-A662-EC1B0FD975FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD951B38-AC77-4987-A662-EC1B0FD975FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD951B38-AC77-4987-A662-EC1B0FD975FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC736F16-51A1-46B4-923E-EC97C6006CCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC736F16-51A1-46B4-923E-EC97C6006CCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC736F16-51A1-46B4-923E-EC97C6006CCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC736F16-51A1-46B4-923E-EC97C6006CCB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
