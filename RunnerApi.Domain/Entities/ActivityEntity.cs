@@ -10,6 +10,7 @@ public class ActivityEntity
     public double Distance { get; set; }
     public double Duration { get; set; }
     public DateTime Date { get; set; }
+    public int RunnerId { get; set; }
     
     public Activity Map()
     {
@@ -18,7 +19,8 @@ public class ActivityEntity
             Type = Type,
             Distance = Distance,
             Duration = Duration,
-            Date = Date
+            Date = Date,
+            RunnerId = RunnerId
         };
     }
 }

@@ -69,6 +69,10 @@ public class Repository : IRepository
 
     public async Task<Activity> CreateActivity(Activity activity)
     {
+        //Check if the runner exists
+        var runner = await GetRunner(activity.RunnerId);
+        if (runner == null)
+            throw new Exception("Cannot create activity, runner not found");
         await _db.AddAsync(activity.Map());
         await _db.SaveChangesAsync();
         return activity;
@@ -87,19 +91,32 @@ public class Repository : IRepository
         return await _db.Activities.Select(a => a.Map()).ToListAsync();
     }
 
+    public async Task<IEnumerable<Activity>> GetActivitiesByRunnerId(int runnerId)
+    {
+        return await _db.Activities
+            .Where(a => a.RunnerId == runnerId)
+            .Select(a => a.Map())
+            .ToListAsync();
+    }
+
     public async Task<Activity> UpdateActivity(int id, Activity updatedActivity)
     {
-        var originalRunner = await _db.Activities
+        var originalActivity = await _db.Activities
             .Where(r => r.Id == id)
             .FirstOrDefaultAsync();
 
-        if (originalRunner == null)
+        if (originalActivity == null)
             throw new Exception("Activity not found");
 
-        originalRunner.Type = updatedActivity.Type;
-        originalRunner.Distance = updatedActivity.Distance;
-        originalRunner.Duration = updatedActivity.Duration;
-        originalRunner.Date = updatedActivity.Date;
+        var runner = await GetRunner(updatedActivity.RunnerId);
+        if (runner == null)
+            throw new Exception("Cannot update activity, runner not found");
+
+        originalActivity.Type = updatedActivity.Type;
+        originalActivity.Distance = updatedActivity.Distance;
+        originalActivity.Duration = updatedActivity.Duration;
+        originalActivity.Date = updatedActivity.Date;
+        originalActivity.RunnerId = updatedActivity.RunnerId;
 
         await _db.SaveChangesAsync();
         return updatedActivity;

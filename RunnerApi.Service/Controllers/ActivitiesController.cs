@@ -72,6 +72,26 @@ public class ActivitiesController : ControllerBase
     }
     
     /// <summary>
+    /// Gets a list of activities for a runner
+    /// </summary>
+    /// <returns>the list of activities</returns>
+    [HttpGet("GetByRunnerId/{runnerId:int}")]
+    public async Task<IActionResult> GetActivitiesByRunnerId(int runnerId)
+    {
+        try
+        {
+            var activities = await _repo.GetActivitiesByRunnerId(runnerId);
+            return Ok(activities);
+        }
+        catch (Exception e)
+        {
+            // Log the exception
+            return BadRequest(e.Message);
+        }
+    }
+    
+    
+    /// <summary>
     /// Updates an activity
     /// </summary>
     /// <returns>the updated activity</returns>

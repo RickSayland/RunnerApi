@@ -20,6 +20,7 @@ public interface IRepository
     public Task<Activity> CreateActivity(Activity activity);
     public Task<Activity?> GetActivity(int id);
     public Task<IEnumerable<Activity>> GetActivities();
+    public Task<IEnumerable<Activity>> GetActivitiesByRunnerId(int runnerId);
     public Task<Activity> UpdateActivity(int id, Activity updatedActivity);
     public Task<bool> DeleteActivity(int id);
 
