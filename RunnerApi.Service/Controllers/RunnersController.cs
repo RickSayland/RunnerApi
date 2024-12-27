@@ -44,6 +44,8 @@ public class RunnersController : ControllerBase
         try
         {
             var runner = await _repo.GetRunner(id);
+            if (runner == null)
+                return NotFound();
             return Ok(runner);
         }
         catch (Exception e)

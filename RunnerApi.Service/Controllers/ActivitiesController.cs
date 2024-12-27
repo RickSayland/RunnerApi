@@ -43,6 +43,8 @@ public class ActivitiesController : ControllerBase
         try
         {
             var activity = await _repo.GetActivity(id);
+            if (activity == null)
+                return NotFound();
             return Ok(activity);
         }
         catch (Exception e)
