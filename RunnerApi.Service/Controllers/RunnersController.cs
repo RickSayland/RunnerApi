@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RunnerApi.Domain.DTOs;
 using RunnerApi.Service.Services;
@@ -5,6 +6,7 @@ using RunnerApi.Service.Services;
 namespace RunnerApi.Service.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("[controller]")]
 public class RunnersController : ControllerBase
 {
