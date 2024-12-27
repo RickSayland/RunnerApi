@@ -20,18 +20,13 @@ public class RunnerApiClient : IRunnerApiClient
         try
         {
             var response = await _client.PostAsJsonAsync("https://localhost:5001/Runners/Create", newRunner);
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<Runner>(content);
-            }
-
-            return null;
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<Runner>(content);
         }
         catch (Exception ex)
         {
-            // log
-            return null;
+            // log and rethrow for the consumer to handle
+            throw new Exception("Error creating runner", ex);
         }
     }
 
@@ -40,18 +35,13 @@ public class RunnerApiClient : IRunnerApiClient
         try
         {
             var response = await _client.GetAsync($"https://localhost:5001/Runners/Read/{id}");
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<Runner>(content);
-            }
-
-            return null;
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<Runner>(content);
         }
         catch (Exception ex)
         {
-            // log
-            return null;
+            // log and rethrow for the consumer to handle
+            throw new Exception("Error getting runner", ex);
         }
     }
 
@@ -60,18 +50,13 @@ public class RunnerApiClient : IRunnerApiClient
         try
         {
             var response = await _client.GetAsync("https://localhost:5001/Runners/ReadAll");
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<IEnumerable<Runner>>(content);
-            }
-
-            return null;
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<IEnumerable<Runner>>(content);
         }
         catch (Exception ex)
         {
-            // log
-            return null;
+            // log and rethrow for the consumer to handle
+            throw new Exception("Error getting runners", ex);
         }
     }
 
@@ -80,18 +65,13 @@ public class RunnerApiClient : IRunnerApiClient
         try
         {
             var response = await _client.PutAsJsonAsync($"https://localhost:5001/Runners/Update/{id}", updatedRunner);
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<Runner>(content);
-            }
-
-            return null;
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<Runner>(content);
         }
         catch (Exception ex)
         {
-            // log
-            return null;
+            // log and rethrow for the consumer to handle
+            throw new Exception("Error updating runner", ex);
         }
     }
 
@@ -100,18 +80,13 @@ public class RunnerApiClient : IRunnerApiClient
         try
         {
             var response = await _client.GetAsync($"https://localhost:5001/Runners/Delete/{id}");
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<bool?>(content);
-            }
-
-            return null;
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<bool?>(content);
         }
         catch (Exception ex)
         {
-            // log
-            return null;
+            // log and rethrow for the consumer to handle
+            throw new Exception("Error deleting runner", ex);
         }
     }
 
@@ -124,18 +99,13 @@ public class RunnerApiClient : IRunnerApiClient
         try
         {
             var response = await _client.PostAsJsonAsync("https://localhost:5001/Activities/Create", newActivity);
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<Activity>(content);
-            }
-
-            return null;
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<Activity>(content);
         }
         catch (Exception ex)
         {
-            // log
-            return null;
+            // log and rethrow for the consumer to handle
+            throw new Exception("Error creating activity", ex);
         }
     }
 
@@ -144,18 +114,13 @@ public class RunnerApiClient : IRunnerApiClient
         try
         {
             var response = await _client.GetAsync($"https://localhost:5001/Activities/Read/{id}");
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<Activity>(content);
-            }
-
-            return null;
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<Activity>(content);
         }
         catch (Exception ex)
         {
-            // log
-            return null;
+            // log and rethrow for the consumer to handle
+            throw new Exception("Error getting activity", ex);
         }
     }
 
@@ -164,18 +129,13 @@ public class RunnerApiClient : IRunnerApiClient
         try
         {
             var response = await _client.GetAsync("https://localhost:5001/Activities/ReadAll");
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<IEnumerable<Activity>>(content);
-            }
-
-            return null;
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<IEnumerable<Activity>>(content);
         }
         catch (Exception ex)
         {
-            // log
-            return null;
+            // log and rethrow for the consumer to handle
+            throw new Exception("Error getting activities", ex);
         }
     }
 
@@ -184,18 +144,14 @@ public class RunnerApiClient : IRunnerApiClient
         try
         {
             var response = await _client.GetAsync($"https://localhost:5001/Activities/GetByRunnerId/{runnerId}");
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<IEnumerable<Activity>>(content);
-            }
-
-            return null;
+            if (!response.IsSuccessStatusCode) throw new Exception("Error getting activities by runner id");
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<IEnumerable<Activity>>(content);
         }
         catch (Exception ex)
         {
-            // log
-            return null;
+            // log and rethrow for the consumer to handle
+            throw new Exception("Error getting activities by runner id", ex);
         }
     }
 
@@ -205,18 +161,13 @@ public class RunnerApiClient : IRunnerApiClient
         {
             var response =
                 await _client.PutAsJsonAsync($"https://localhost:5001/Activities/Update/{id}", updatedActivity);
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<Activity>(content);
-            }
-
-            return null;
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<Activity>(content);
         }
         catch (Exception ex)
         {
-            // log
-            return null;
+            // log and rethrow for the consumer to handle
+            throw new Exception("Error updating activity", ex);
         }
     }
 
@@ -225,18 +176,13 @@ public class RunnerApiClient : IRunnerApiClient
         try
         {
             var response = await _client.GetAsync($"https://localhost:5001/Activities/Delete/{id}");
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<bool?>(content);
-            }
-
-            return null;
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<bool?>(content);
         }
         catch (Exception ex)
         {
-            // log
-            return null;
+            // log and rethrow for the consumer to handle
+            throw new Exception("Error deleting activity", ex);
         }
     }
 
