@@ -179,9 +179,24 @@ public class RunnerApiClient : IRunnerApiClient
         }
     }
 
-    public Task<IEnumerable<Activity>> GetActivitiesByRunnerId(int runnerId)
+    public async Task<IEnumerable<Activity>> GetActivitiesByRunnerId(int runnerId)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var response = await _client.GetAsync($"https://localhost:5001/Activities/GetByRunnerId/{runnerId}");
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonSerializer.Deserialize<IEnumerable<Activity>>(content);
+            }
+
+            return null;
+        }
+        catch (Exception ex)
+        {
+            // log
+            return null;
+        }
     }
 
     public async Task<Activity> UpdateActivity(int id, Activity updatedActivity)
