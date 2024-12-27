@@ -14,28 +14,29 @@ public class RunnerApiClient : IRunnerApiClient
     {
         _client = new HttpClient();
     }
-    
+
     private void SetJwtToken(string token)
     {
         _jwtToken = token;
-        _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _jwtToken);
+        _client.DefaultRequestHeaders.Authorization =
+            new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _jwtToken);
     }
-    
+
     public async Task<bool> Authorize(string username, string password)
     {
         try
         {
-            var response = await _client.PostAsJsonAsync("https://localhost:5001/Authorization/login", new { username, password });
+            var response = await _client.PostAsJsonAsync("https://localhost:5001/Authorization/login",
+                new { username, password });
             var content = await response.Content.ReadAsStringAsync();
             var token = JsonSerializer.Deserialize<JwtTokenResponse>(content)?.Token;
-            if(token == null) 
+            if (token == null)
                 return false;
             SetJwtToken(token);
             return true;
         }
         catch (Exception ex)
         {
-            // log and rethrow for the consumer to handle
             throw new Exception("Error authorizing", ex);
         }
     }
@@ -52,7 +53,6 @@ public class RunnerApiClient : IRunnerApiClient
         }
         catch (Exception ex)
         {
-            // log and rethrow for the consumer to handle
             throw new Exception("Error creating runner", ex);
         }
     }
@@ -67,7 +67,6 @@ public class RunnerApiClient : IRunnerApiClient
         }
         catch (Exception ex)
         {
-            // log and rethrow for the consumer to handle
             throw new Exception("Error getting runner", ex);
         }
     }
@@ -82,7 +81,6 @@ public class RunnerApiClient : IRunnerApiClient
         }
         catch (Exception ex)
         {
-            // log and rethrow for the consumer to handle
             throw new Exception("Error getting runners", ex);
         }
     }
@@ -97,7 +95,6 @@ public class RunnerApiClient : IRunnerApiClient
         }
         catch (Exception ex)
         {
-            // log and rethrow for the consumer to handle
             throw new Exception("Error updating runner", ex);
         }
     }
@@ -112,7 +109,6 @@ public class RunnerApiClient : IRunnerApiClient
         }
         catch (Exception ex)
         {
-            // log and rethrow for the consumer to handle
             throw new Exception("Error deleting runner", ex);
         }
     }
@@ -131,7 +127,6 @@ public class RunnerApiClient : IRunnerApiClient
         }
         catch (Exception ex)
         {
-            // log and rethrow for the consumer to handle
             throw new Exception("Error creating activity", ex);
         }
     }
@@ -146,7 +141,6 @@ public class RunnerApiClient : IRunnerApiClient
         }
         catch (Exception ex)
         {
-            // log and rethrow for the consumer to handle
             throw new Exception("Error getting activity", ex);
         }
     }
@@ -161,7 +155,6 @@ public class RunnerApiClient : IRunnerApiClient
         }
         catch (Exception ex)
         {
-            // log and rethrow for the consumer to handle
             throw new Exception("Error getting activities", ex);
         }
     }
@@ -177,7 +170,6 @@ public class RunnerApiClient : IRunnerApiClient
         }
         catch (Exception ex)
         {
-            // log and rethrow for the consumer to handle
             throw new Exception("Error getting activities by runner id", ex);
         }
     }
@@ -193,7 +185,6 @@ public class RunnerApiClient : IRunnerApiClient
         }
         catch (Exception ex)
         {
-            // log and rethrow for the consumer to handle
             throw new Exception("Error updating activity", ex);
         }
     }
@@ -208,7 +199,6 @@ public class RunnerApiClient : IRunnerApiClient
         }
         catch (Exception ex)
         {
-            // log and rethrow for the consumer to handle
             throw new Exception("Error deleting activity", ex);
         }
     }

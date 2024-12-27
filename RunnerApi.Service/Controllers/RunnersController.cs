@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using RunnerApi.Domain.DTOs;
 using RunnerApi.Service.Services;
 
@@ -11,10 +12,12 @@ namespace RunnerApi.Service.Controllers;
 public class RunnersController : ControllerBase
 {
     private readonly IRepository _repo;
+    private readonly ILogger<RunnersController> _logger;
 
-    public RunnersController(IRepository repo)
+    public RunnersController(IRepository repo, ILogger<RunnersController> logger)
     {
         _repo = repo;
+        _logger = logger;
     }
 
     /// <summary>
@@ -31,7 +34,7 @@ public class RunnersController : ControllerBase
         }
         catch (Exception e)
         {
-            // Log the exception
+            _logger.Log(LogLevel.Error, e, "Error creating runner");
             return BadRequest(e.Message);
         }
     }
@@ -52,7 +55,7 @@ public class RunnersController : ControllerBase
         }
         catch (Exception e)
         {
-            // Log the exception
+            _logger.Log(LogLevel.Error, e, "Error getting runner");
             return BadRequest(e.Message);
         }
     }
@@ -71,7 +74,7 @@ public class RunnersController : ControllerBase
         }
         catch (Exception e)
         {
-            // Log the exception
+            _logger.Log(LogLevel.Error, e, "Error getting runners");
             return BadRequest(e.Message);
         }
     }
@@ -90,7 +93,7 @@ public class RunnersController : ControllerBase
         }
         catch (Exception e)
         {
-            // Log the exception
+            _logger.Log(LogLevel.Error, e, "Error updating runner");
             return BadRequest(e.Message);
         }
     }
@@ -109,7 +112,7 @@ public class RunnersController : ControllerBase
         }
         catch (Exception e)
         {
-            // Log the exception
+            _logger.Log(LogLevel.Error, e, "Error deleting runner");
             return BadRequest(e.Message);
         }
     }

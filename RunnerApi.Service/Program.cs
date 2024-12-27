@@ -32,6 +32,7 @@ class Program
         builder.Services.AddSingleton<IJwtAuthManager>(new JwtAuthManager(key));
 
         builder.Services.AddControllers();
+        builder.Services.AddLogging();
 
         using (var client = new DatabaseContext())
         {

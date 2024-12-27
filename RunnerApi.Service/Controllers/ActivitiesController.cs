@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using RunnerApi.Domain.DTOs;
 using RunnerApi.Service.Services;
 
@@ -11,9 +12,11 @@ namespace RunnerApi.Service.Controllers;
 public class ActivitiesController : ControllerBase
 {
     private readonly IRepository _repo;
-    public ActivitiesController(IRepository repo)
+    private readonly ILogger<ActivitiesController> _logger;
+    public ActivitiesController(IRepository repo, ILogger<ActivitiesController> logger)
     {
         _repo = repo;
+        _logger = logger;
     }
     
     /// <summary>
@@ -30,7 +33,7 @@ public class ActivitiesController : ControllerBase
         }
         catch (Exception e)
         {
-            // Log the exception
+            _logger.Log(LogLevel.Error, e, "Error creating activity");
             return BadRequest(e.Message);
         }
     }
@@ -51,7 +54,7 @@ public class ActivitiesController : ControllerBase
         }
         catch (Exception e)
         {
-            // Log the exception
+            _logger.Log(LogLevel.Error, e, "Error getting activity");
             return BadRequest(e.Message);
         }
     }
@@ -70,7 +73,7 @@ public class ActivitiesController : ControllerBase
         }
         catch (Exception e)
         {
-            // Log the exception
+            _logger.Log(LogLevel.Error, e, "Error getting activities");
             return BadRequest(e.Message);
         }
     }
@@ -89,7 +92,7 @@ public class ActivitiesController : ControllerBase
         }
         catch (Exception e)
         {
-            // Log the exception
+            _logger.Log(LogLevel.Error, e, "Error getting activities by runner");
             return BadRequest(e.Message);
         }
     }
@@ -109,7 +112,7 @@ public class ActivitiesController : ControllerBase
         }
         catch (Exception e)
         {
-            // Log the exception
+            _logger.Log(LogLevel.Error, e, "Error updating activity");
             return BadRequest(e.Message);
         }
     }
@@ -128,7 +131,7 @@ public class ActivitiesController : ControllerBase
         }
         catch (Exception e)
         {
-            // Log the exception
+            _logger.Log(LogLevel.Error, e, "Error deleting activity");
             return BadRequest(e.Message);
         }
     }

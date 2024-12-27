@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
 using RunnerApi.Domain.DTOs;
 using RunnerApi.Domain.Enums;
@@ -11,12 +12,14 @@ namespace RunnerApi.Tests.Controllers;
 public class ActivitiesControllerTests
 {
     private readonly Mock<IRepository> _mockRepo;
+    private readonly Mock<ILogger<ActivitiesController>> _mockLogger;
     private readonly ActivitiesController _controller;
 
     public ActivitiesControllerTests()
     {
         _mockRepo = new Mock<IRepository>();
-        _controller = new ActivitiesController(_mockRepo.Object);
+        _mockLogger = new Mock<ILogger<ActivitiesController>>();
+        _controller = new ActivitiesController(_mockRepo.Object, _mockLogger.Object);
     }
 
     [Fact]
