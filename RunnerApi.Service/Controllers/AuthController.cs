@@ -5,7 +5,7 @@ namespace RunnerApi.Service.Controllers;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
-[Route("api/auth")]
+[Route("Authorization")]
 public class AuthController : ControllerBase
 {
     private readonly IJwtAuthManager _jwtAuthManager;

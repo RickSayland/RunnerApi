@@ -1,5 +1,6 @@
 ﻿using System.Net.Http.Json;
 using System.Text.Json;
+using RunnerApi.Domain.Authentication;
 using RunnerApi.Domain.DTOs;
 
 namespace RunnerApi.ApiClient;
@@ -7,10 +8,36 @@ namespace RunnerApi.ApiClient;
 public class RunnerApiClient : IRunnerApiClient
 {
     private HttpClient _client;
+    private string _jwtToken;
 
     public RunnerApiClient()
     {
         _client = new HttpClient();
+    }
+    
+    private void SetJwtToken(string token)
+    {
+        _jwtToken = token;
+        _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _jwtToken);
+    }
+    
+    public async Task<bool> Authorize(string username, string password)
+    {
+        try
+        {
+            var response = await _client.PostAsJsonAsync("https://localhost:5001/Authorization/login", new { username, password });
+            var content = await response.Content.ReadAsStringAsync();
+            var token = JsonSerializer.Deserialize<JwtTokenResponse>(content)?.Token;
+            if(token == null) 
+                return false;
+            SetJwtToken(token);
+            return true;
+        }
+        catch (Exception ex)
+        {
+            // log and rethrow for the consumer to handle
+            throw new Exception("Error authorizing", ex);
+        }
     }
 
     #region Runners

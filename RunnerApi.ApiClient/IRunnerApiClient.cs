@@ -4,6 +4,8 @@ namespace RunnerApi.ApiClient;
 
 public interface IRunnerApiClient
 {
+    public Task<bool> Authorize(string username, string password);
+
     #region Runners
 
     public Task<Runner> CreateRunner(Runner runner);
